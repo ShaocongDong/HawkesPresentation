@@ -90,30 +90,42 @@ Arrivals are following certain prespecified distributions.
 
 \begin{frame}
 \frametitle{Poisson Process}
-stub
+Arrival time are distributed as exponential random variables.
 \begin{itemize}
-	\item stub
+	\item $\tau_i \sim Exp(\lambda)$
+	\item pdf of $\tau$ : $f_{\tau}(t) = \lambda e^{-\lambda t}, \forall t \ge 0$
+	\item expectation of $\tau$ : $\mathbb{E}(\tau) = \lambda^{-1}$
+	\item $T_n = \sum_{j=1}^n \tau_j$
+	\item $N_t = \sum_{i \ge 1} \mathbbm{1}_{\{ t \ge T_i\}}$
+	\item Memoryless property: $\mathbb{P}(\tau > t + m \mid \tau > m) = \mathbb{P}(\tau > t)$
+	\item Homogeneous: all arrival times are distributed as exponential random variables with the same $\lambda$
+	\item Non-Homogeneous : intensity varies with time, more formally defined as: $\lambda(t \mid H_t) = \lim_{h \to 0} \frac{\mathbb{P}\{ N_{t + h} - N_t = 1 \mid H_t\}}{h}$
 \end{itemize}
 \end{frame}
 
 \section{Single Variable Hawkes Process}
 
 \begin{frame}
-\frametitle{Numerical operations}
-stub
+\frametitle{Hawkes Process}
+Formulation:\\
+$\lambda(t \mid H_t) = \lambda_0(t) + \sum_{i: t > T_i} \phi(t - T_i)$
 \begin{itemize}
-	\item stub
+	\item Self-exciting property: Arrivals of events increase the likelihood of future observations.
+	\item Non-Homogeneous
+	\item Deterministic base intensity function: $\lambda_0(t)$
+	\item Memory Kernel: $\phi(t - T_i)$ which links to past arrivals times
 \end{itemize}
 \end{frame}
-%------------------------------------------------
 
 \subsection{Memory Kernels}
 
 \begin{frame}
 \frametitle{Memory Kernels}
-stub
+Memory Kernels can be in any form, with two popular forms:
 \begin{itemize}
-	\item stub
+	\item Exponential decay kernel: $\phi(x) = \alpha e^{-\delta x}$
+	\item Power law kernel: $\phi(x) = \frac{\alpha}{(x + \delta)^{\eta + 1}}$
+	\item By the self-exciting property, the kernel shoud possess decay property since we expect the intensity to be higher when there are more arrivals in the near past.
 \end{itemize}
 \end{frame}
 
