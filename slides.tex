@@ -135,7 +135,7 @@ TODO : one image of branching structure here - univariate case
 \subsection{Deterministic Intensity Functions}
 \begin{frame}
 \frametitle{Deterministic Intensity Functions}
-Intensity function $\lambda_0(t)>0$, describes external event triggering
+Base intensity function $\lambda_0(t)>0$, describes externally triggered events (immigrants)
 \begin{itemize}
 	\item Independence: previous events within the process
 	\item Base (or background) intensity
@@ -153,6 +153,7 @@ Intensity function $\lambda_0(t)>0$, describes external event triggering
 	\item Sub-Critical phase if $\mid \Phi \mid < 1$, meaning the number of events in one cluster is bounded.
 	\item Super-Critical if $\mid \Phi \mid > 1$, meaning the number of events in one cluster is unbounded.
 	\item The properties of Sub-Critical and Super-Critical mimics the stationarity property of stochastic processes.
+	\item Expected number of events in one cluster $ = \frac{1}{1 - \mid \Phi \mid}$
 \end{itemize}
 \end{frame}
 
@@ -301,65 +302,56 @@ Differentiate with respect to $\delta$:
 \section{Bivariate Hawkes Process}
 
 \begin{frame}
-\frametitle{Hawkes Process}
-Formulation:\\
-$\lambda_1(t \mid F_t) = \lambda_{1,0}(t) + \sum_{i: t > T_{1,i}} \phi_{1,1}(t - T_{1,i}) + \sum_{i: t > T_{2,i}} \phi_{2,1}(t - T_{2,i})$\\
-$\lambda_2(t \mid F_t) = \lambda_{2,0}(t) + \sum_{i: t > T_{1,i}} \phi_{1,2}(t - T_{1,i}) + \sum_{i: t > T_{2,i}} \phi_{2,2}(t - T_{2,i})$
+\frametitle{Bivariate / Multivariate Hawkes Process}
+Formulation in our original paper:\\
+$\lambda_t^i = \mu^i + \sum_{j=1}^D \int dN_{t'}^j \phi^{i,j} (t - t')$\\
 \begin{itemize}
-	\item $F_t$ should be recognized as a filtration, a welter of all the information known at time $t$
-	\item Self-exciting property: Arrivals of events increase the likelihood of future observations. Intensity at the current time depends on how many and how far away are the most recent arrivals in the past.
-	\item Non-Homogeneous, as the intensity of the exponential random variables changes with time.
-	\item Deterministic base intensity function: $\lambda_{j,0}(t)$
-	\item Memory Kernel: $\phi(t - T_i)$ which links to past arrivals times
-	\item Event Decay: monotonically decreasing kernel
+	\item $D$ : the number of variables following Hawkes Process
+	\item $\phi^{i,j}$ : the effect of variable $j$'s arrival on variable $i$'s intensity
+	\item $\mu^i$ : the constant base intensity function of variable $i$
+	\item $\lambda_t^i$ : the intensity of variable $i$ at time $t$
+	\item $T_{j,k}$ : the $k$th event time of variable $j$
+\end{itemize}
+Formulation after reconcilation with notation in univariate case:\\
+$\lambda_t^i = \mu^i + \sum_{j=1}^2 \sum_{k: t > T_{j,k}} \phi^{i,j}(t - T_{j,k})$\\	
+$\lambda_1(t \mid F_t) = \lambda_{1,0}(t) + \sum_{i: t > T_{1,i}} \phi^{1,1}(t - T_{1,i}) + \sum_{i: t > T_{2,i}} \phi^{1,2}(t - T_{2,i})$\\
+$\lambda_2(t \mid F_t) = \lambda_{2,0}(t) + \sum_{i: t > T_{1,i}} \phi^{2,1}(t - T_{1,i}) + \sum_{i: t > T_{2,i}} \phi^{2,2}(t - T_{2,i})$
+\end{frame}
+
+\begin{frame}
+\frametitle{Bivariate / Multivariate Hawkes Process}
+\begin{itemize}
+	\item Base intensity function $\lambda_{i,0}(t)>0$ describes externally triggered events (immigrants) of variable $i$
+	\item The memory kernels will appear in matrix of functions, in which the functions are positive and causal
+	\item $\phi^{i,j}(t) = 0 \; \forall t < 0$
+	\item $\phi^{i,j}(t) >= 0 \; \forall t$
 \end{itemize}
 \end{frame}
 
-\subsection{Branching Structure}
+\subsection{Branching Structure and Clustering Representation}
 \begin{frame}
-\frametitle{Branching Structure}
+\frametitle{Branching Structure and Clustering Representation}
 \begin{itemize}
-	\item We can divide the events into two categories, immigrants and the offsprings.
-	\item Immigrants : the events directly caused by the base intensity
-	\item Offsprings : the events `\textbf{excited}' by immigrants or another offspring
-	\item Self-exciting is the property which can be observed in the financial markets as momentum, in which investors following the trend in the prices tend to cause trend in the same direction.
-	\item In econometrics, this property of markets is observed as reverse casuality, as price movements drive demands, and demands drive prices as well.
+	\item The different variables share the clusters, as each variable have the ability to excite other variables and own events which parent the offsprings events in other variables
 \end{itemize}
-TODO : one image of branching structure here - univariate case
-\end{frame}
-
-\subsection{Deterministic Intensity Functions}
-\begin{frame}
-\frametitle{Deterministic Intensity Functions}
-Intensity function $\lambda_0(t)>0$, describes external event triggering
-\begin{itemize}
-	\item Independence: previous events within the process
-	\item Base (or background) intensity
-	\item In the multivariate/bivariate case, the intensity function can be a constant.
-	\item For example, $\lambda_i,0(t) = \mu_i$ for a formulation of $\lambda_i(t) = \mu_i + \sum_{i: t > T_i} \phi(t - T_i)$
-\end{itemize}
-\end{frame}
-
-\subsection{Cluster of offspring}
-\begin{frame}
-\frametitle{Cluster of offspring}
-\begin{itemize}
-	\item The offsprings of one immigrant events, which are the immediate offsprings of it, and their immediate offsprings, and their immediate offsprings, \dots, can be grouped as one cluster.
-	\item Branching factor is defined as the expected number of events generated by a parent event : $\mid \Phi \mid = \int_0^{\infty} \phi(\tau) d\tau$
-	\item Sub-Critical phase if $\mid \Phi \mid < 1$, meaning the number of events in one cluster is bounded.
-	\item Super-Critical if $\mid \Phi \mid > 1$, meaning the number of events in one cluster is unbounded.
-	\item The properties of Sub-Critical and Super-Critical mimics the stationarity property of stochastic processes.
-\end{itemize}
+TODO : one image of branching structure here - bivariate case
 \end{frame}
 
 \subsection{Memory Kernels}
 \begin{frame}
-\frametitle{Memory Kernels}
-Memory Kernels can be in any form, with two popular forms:
+\frametitle{Bivariate Exponential Kernels}
+\[
+\Phi(t) = 
+\left( \begin{array}{ccc}
+\phi^s(t) & \phi^c(t) \\
+\phi^c(t) & \phi^s(t) \end{array} \right).
+\]
 \begin{itemize}
-	\item Exponential decay kernel: $\phi(x) = \alpha e^{-\delta x}$
-	\item Power law kernel: $\phi(x) = \frac{\alpha}{(x + \delta)^{\eta + 1}}$
-	\item By the self-exciting property, the kernel shoud possess decay property since we expect the intensity to be higher when there are more arrivals in the near past.
+	\item $\phi^s(t) = \alpha^s \beta^s \exp(-\beta^s t), \forall t > 0$
+	\item $\phi^c(t) = \alpha^c \beta^c \exp(-\beta^c t), \forall t > 0$
+	\item This is one special case, in which two variables share the same function / parameter which determine the effect of them exciting themselves or exciting the other variable.
+	\item $\phi^{1,2}(t) = \phi^{2,1}(t) = \phi^s(t)$ : \textbf{s}elf-effect
+	\item $\phi^{1,1}(t) = \phi^{2,2}(t) = \phi^c(t)$ : \textbf{c}ross-effect
 \end{itemize}
 \end{frame}
 
