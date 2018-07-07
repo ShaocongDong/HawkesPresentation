@@ -215,12 +215,12 @@ L(\Theta) = &\prod_{i=1}^n f(T_{i}) \prod_{i=1}^n (1-F_{T_{i-1}}(T_i)) (1-F_{T_{
 \begin{frame}
 \frametitle{Likelihood functions}
 Suppose we are going to use exponential decay kernel representation and constant base intensity function:\\
-$\phi(t) = \alpha \exp^{\delta t}$, $\lambda_0(t) = \mu \to \lambda(t \mid F_{t}) = \mu + \sum_{i: t>T_i} \alpha \exp^{\delta (t - T_{i})}$
+$\phi(t) = \alpha e^{\delta t}$, $\lambda_0(t) = \mu \to \lambda(t \mid F_{t}) = \mu + \sum_{i: t>T_i} \alpha e^{\delta (t - T_{i})}$
 \begin{equation*}
 \begin{split}
 L(\Theta) = &\exp(-\int_{0}^{T} \lambda(t \mid F_t) dt) \prod_{i=1}^n \lambda(T_i \mid F_{T_{i}})\\
-= &\exp(-\int_{0}^{T}  (\mu + \sum_{i: t>T_i} \alpha \exp^{\delta (t - T_i)}) dt) \prod_{i=1}^n (\mu + \sum_{j=0}^i \alpha \exp^{\delta (T_i - T_j)})\\
-\log L(\Theta) = & \sum_{i=1}^n \log (\mu + \sum_{j=0}^i \alpha \exp^{\delta (T_i - T_j)}) -\int_{0}^{T}  (\mu + \sum_{i: t>T_i} \alpha \exp^{\delta (t - T_i)}) dt 
+= &\exp(-\int_{0}^{T}  (\mu + \sum_{i: t>T_i} \alpha e^{\delta (t - T_i)}) dt) \prod_{i=1}^n (\mu + \sum_{j=0}^i \alpha e^{\delta (T_i - T_j)})\\
+\ln L(\Theta) = & \sum_{i=1}^n \ln (\mu + \sum_{j=0}^i \alpha e^{\delta (T_i - T_j)}) -\int_{0}^{T}  (\mu + \sum_{i: t>T_i} \alpha e^{\delta (t - T_i)}) dt 
 \end{split}
 \end{equation*}
 \end{frame}
