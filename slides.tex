@@ -174,16 +174,39 @@ Memory Kernels can be in any form, with two popular forms:
 \subsection{Simulation}
 
 \begin{frame}
-\frametitle{Thinning Algorithm}
+	\frametitle{Simulating events from Hawkes prosses}
+	\begin{itemize}
+		\item \textbf{Goal}: simulate inter-arrival times $\tau_i$, $i=1,2,\dots$, according to intensity function $\lambda_t$
+		\item \textbf{Poisson Process}: $f_{\tau}(t)=\lambda e^{-\lambda t},F_{\tau}(t)=1-e^{-\lambda t} , t>0$
+		\item \textit{inverse transform sampling}: $Y=F_X(X) \sim U(0,1)$ $\Rightarrow$ Sample $u\sim U(0,1)$, then compute $\tau=\frac{- \ln u}{\lambda}$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Thinning Algorithm - rejection sampling}
+Applies to all non-homogeneous Poisson processes. 
 \begin{itemize}
-	\item stub
+	\item \textit{thinning property}: Poisson process with intensity $\lambda$ can be split to two independent processes with intensities $\lambda_1$ and $\lambda_2$, where $\lambda = \lambda_1+\lambda_2$
+	\item Monotonically decreasing kernel: $[T_i,T_{i+1})$, $\lambda(T_i)$ is the upper bound of event intensity.
+	\item Sampling procedure:
+	\begin{enumerate}
+		\item $T=T_i$, sample $\tau$ (inverse transform)
+		\item $\lambda^{\star}=\lambda(T)$, update $T=T+\tau$
+		\item $s\sim U(0,1)$, $T_i=T$ if $s<\frac{\lambda(T)}{\lambda^{\star}}$, otherwise repeat process
+		\item Repeat until react to $i=N$
+	\end{enumerate}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Decomposition Algorithm}
+Efficient sampling for Hawkes process with exponential kernel
+\[\lambda(t)=\underbrace{a+(\lambda_0-a)e^{-\delta t}}_{\text{immigrant rate}}+\underbrace{\sum_{T_i<t}\gamma e^{-\delta(t-T_i)}}_{\text{jump by event}}, t>0 \]
 \begin{itemize}
-	\item stub
+	\item Markov (process) decomposition when $\Phi$ is exponential
+	\item Part 1: sample $s_0=-\frac{1}{a}\ln u_0$ (inverse transform)
+	\item Part 2: $s_1=-\frac{1}{\delta}\ln d$, $d=1+\frac{\delta \ln u_1}{\lambda(T^+_{i-1})-a}$ (Markov property)
+	\item Inter Arrival time = $\min\{s_0,s_1\}$
 \end{itemize}
 \end{frame}
 
