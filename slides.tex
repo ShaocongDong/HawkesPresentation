@@ -162,9 +162,10 @@ Base intensity function $\lambda_0(t)>0$, describes externally triggered events 
 \frametitle{Memory Kernels}
 Memory Kernels can be in any form, with two popular forms:
 \begin{itemize}
-	\item Exponential decay kernel: $\phi(x) = \alpha e^{-\delta x}$
-	\item Power law kernel: $\phi(x) = \frac{\alpha}{(x + \delta)^{\eta + 1}}$
+	\item Exponential decay kernel: $\phi(t) = \alpha e^{-\delta t}$
+	\item Power law kernel: $\phi(t) = \frac{\alpha}{(1 + \beta t)^{1 + \gamma}}$
 	\item By the self-exciting property, the kernel shoud possess decay property since we expect the intensity to be higher when there are more arrivals in the near past.
+	\item The multiplier $\beta$ to $\alpha$ is left out because a variable $\alpha$ is able to capture the changes by itself.
 \end{itemize}
 \end{frame}
 
@@ -210,7 +211,7 @@ Efficient sampling for Hawkes process with exponential kernel
 %------------------------------------------------
 \subsection{Parameter Estimation}
 \begin{frame}
-\frametitle{Likelihood functions}
+\frametitle{Likelihood functions for Exponential Kernels}
 In this section we put some efforts into writing out the likelihood function of Univariate Hawkes Process, and solving for its parameters if possible and not too computationally costly.
 \begin{itemize}
 	\item Ideally the likehood function should be a function of the probability density functions at the event times, and the cumulative density functions between event times.
@@ -221,7 +222,7 @@ In this section we put some efforts into writing out the likelihood function of 
 \end{frame}
 
 \begin{frame}
-\frametitle{Likelihood functions}
+\frametitle{Likelihood functions for Exponential Kernels}
 \begin{equation*}
 \begin{split}
 L(\Theta) = &\prod_{i=1}^n f(T_{i}) \prod_{i=1}^n (1-F_{T_{i-1}}(T_i)) (1-F_{T_{n}}(T))\\
@@ -232,7 +233,7 @@ L(\Theta) = &\prod_{i=1}^n f(T_{i}) \prod_{i=1}^n (1-F_{T_{i-1}}(T_i)) (1-F_{T_{
 \end{frame}
 
 \begin{frame}
-\frametitle{Likelihood functions}
+\frametitle{Likelihood functions for Exponential Kernels}
 Suppose we are going to use exponential decay kernel representation and constant base intensity function:\\
 $\phi(t) = \alpha e^{\delta t}$, $\lambda_0(t) = \mu \to \lambda(t \mid F_{t}) = \mu + \sum_{i: t>T_i} \alpha e^{\delta (t - T_{i})}$
 \begin{equation*}
@@ -245,7 +246,7 @@ L(\Theta) = &\exp(-\int_{0}^{T} \lambda(t \mid F_t) dt) \prod_{i=1}^n \lambda(T_
 \end{frame}
 
 \begin{frame}
-\frametitle{Maximum Likelihood Estimates}
+\frametitle{Maximum Likelihood Estimates for Exponential Kernels}
 Differentiate with respect to $\mu$:
 \begin{equation*}
 \begin{split}
@@ -257,7 +258,7 @@ Differentiate with respect to $\mu$:
 \end{frame}
 
 \begin{frame}
-\frametitle{Maximum Likelihood Estimates}
+\frametitle{Maximum Likelihood Estimates for Exponential Kernels}
 Differentiate with respect to $\alpha$:
 \begin{equation*}
 \begin{split}
@@ -269,7 +270,7 @@ Differentiate with respect to $\alpha$:
 \end{frame}
 
 \begin{frame}
-\frametitle{Maximum Likelihood Estimates}
+\frametitle{Maximum Likelihood Estimates for Exponential Kernels}
 Differentiate with respect to $\delta$:
 \begin{equation*}
 \begin{split}
@@ -281,7 +282,7 @@ Differentiate with respect to $\delta$:
 \end{frame}
 
 \begin{frame}
-\frametitle{Maximum Likelihood Estimates}
+\frametitle{Maximum Likelihood Estimates for Exponential Kernels}
 \begin{equation}
 \begin{split}
 &\sum_{i=1}^n \frac{1}{\mu + \alpha \sum_{j=0}^i e^{\delta (T_i - T_j)}} = T
@@ -297,6 +298,67 @@ Differentiate with respect to $\delta$:
 &\sum_{i=1}^n \frac{(T_i - T_j)e^{\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=0}^i e^{\delta (T_i - T_j)}} = \int_{0}^{T}  \sum_{i: t>T_i} (t - T_i)e^{\delta (t - T_i)} dt
 \end{split}
 \end{equation}
+\end{frame}
+
+\begin{frame}
+\frametitle{Likelihood functions for Power Law Kernels}
+Substituting $\phi(t) = \frac{\alpha}{(1 + \beta t)^{1 + \gamma}}$ in:
+\begin{equation*}
+\begin{split}
+L(\Theta) = &\exp(-\int_{0}^{T} \lambda(t \mid F_t) dt) \prod_{i=1}^n \lambda(T_i \mid F_{T_{i}})\\
+= &\exp(-\int_{0}^{T}  \mu + \sum_{i: t>T_i} \frac{\alpha}{(1 + \beta (t - T_i))^{1 + \gamma}} dt) \\
+&\prod_{i=1}^n (\mu + \sum_{j=0}^i \frac{\alpha}{(1 + \beta (T_i - T_j))^{1 + \gamma}})\\[5mm]
+\ln L(\Theta) = &\sum_{i=1}^n \ln(\mu + \alpha\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))^{1 + \gamma}}) - \mu T\\
+- &\alpha \int_{0}^{T} \sum_{i: t>T_i} \frac{1}{(1 + \beta (t - T_i))^{1 + \gamma}} dt
+\end{split}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Maximum Likelihood Estimates for Power Law Kernels}
+\begin{equation*}
+\begin{split}
+\ln L(\Theta) = &\sum_{i=1}^n \ln(\mu + \alpha\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))^{1 + \gamma}}) - \mu T\\
+- &\alpha \int_{0}^{T} \sum_{i: t>T_i} \frac{1}{(1 + \beta (t - T_i))^{1 + \gamma}} dt\\[7mm]
+\frac{\partial}{\partial \mu} \ln L(\Theta) = &\sum_{i=1}^n \frac{1}{\mu + \alpha\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))^{1 + \gamma}}} - T = 0\\
+\end{split}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Maximum Likelihood Estimates for Power Law Kernels}
+\begin{equation*}
+\begin{split}
+\ln L(\Theta) = &\sum_{i=1}^n \ln(\mu + \alpha\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))^{1 + \gamma}}) - \mu T\\
+- &\alpha \int_{0}^{T} \sum_{i: t>T_i} \frac{1}{(1 + \beta (t - T_i))^{1 + \gamma}} dt\\[7mm]
+\frac{\partial}{\partial \alpha} \ln L(\Theta) = &\sum_{i=1}^n \frac{\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))^{1 + \gamma}}}{\mu + \alpha\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))^{1 + \gamma}}}\\
+- &\int_{0}^{T} \sum_{i: t>T_i} \frac{1}{(1 + \beta (t - T_i))^{1 + \gamma}} dt = 0\\
+\end{split}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Maximum Likelihood Estimates for Power Law Kernels}
+\begin{equation*}
+\begin{split}
+\ln L(\Theta) = &\sum_{i=1}^n \ln(\mu + \alpha\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))^{1 + \gamma}}) - \mu T\\
+- &\alpha \int_{0}^{T} \sum_{i: t>T_i} \frac{1}{(1 + \beta (t - T_i))^{1 + \gamma}} dt\\[7mm]
+\frac{\partial}{\partial \beta} \ln L(\Theta) = &\sum_{i=1}^n \frac{\alpha\sum_{j=0}^i \frac{T_i - T_j}{(1 + \beta (T_i - T_j))^{2 + \gamma}}}{\mu + \alpha\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))^{1 + \gamma}}}\\
+- &\int_{0}^{T} \sum_{i: t>T_i} \frac{t - T_i}{(1 + \beta (t - T_i))^{2 + \gamma}} dt = 0\\
+\end{split}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Univariate Model for market activity}
+As tested on the 10 years Euro-Bond future front contract by Bacry, when $\gamma$ is closed to $0$, the empirical kernel is well described by the power-law kernel.
+\begin{equation*}
+\begin{split}
+\sum_{i=1}^n \frac{1}{\mu + \alpha\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))^{1 + \gamma}}} &= T\\
+\sum_{i=1}^n \frac{\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))}}{\mu + \alpha\sum_{j=0}^i \frac{1}{1 + \beta (T_i - T_j)}} = &\int_{0}^{T} \sum_{i: t>T_i} \frac{1}{1 + \beta (t - T_i)} dt\\
+\sum_{i=1}^n \frac{\alpha\sum_{j=0}^i \frac{T_i - T_j}{(1 + \beta (T_i - T_j))^2}}{\mu + \alpha\sum_{j=0}^i \frac{1}{1 + \beta (T_i - T_j)}} = &\int_{0}^{T} \sum_{i: t>T_i} \frac{t - T_i}{(1 + \beta (t - T_i))^2} dt\\
+\end{split}
+\end{equation*}
 \end{frame}
 
 \section{Bivariate Hawkes Process}
@@ -356,8 +418,13 @@ TODO : one image of branching structure here - bivariate case
 \end{frame}
 
 \begin{frame}
-\frametitle{Application}
-If we are applying this model onto commodity prices or foreign exchange rates (where two countries' interest rate prospective are similar), it should be appropriate to assume a zero growth rate / zero drift in the model.
+\frametitle{Application for market activity}
+A result of literature review shows that Hawkes Process models can be applied for:
+\begin{itemize}
+	\item prices of equity index, bond futures, foreign exchange rates
+	\item peculiar non-stationarities in market microstructures such as intraday seasonalities and overnight gaps
+	\item volatility clustering phenomenon modelling (correlated nature of volatility fluctutations)
+\end{itemize}
 \end{frame}
 
 \begin{frame}
