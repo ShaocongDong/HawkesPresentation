@@ -114,6 +114,7 @@ $\lambda(t \mid H_t) = \lambda_0(t) + \sum_{i: t > T_i} \phi(t - T_i)$
 	\item Non-Homogeneous, as the intensity of the exponential random variables changes with time.
 	\item Deterministic base intensity function: $\lambda_0(t)$
 	\item Memory Kernel: $\phi(t - T_i)$ which links to past arrivals times
+	\item Event Decay: monotonically decreasing kernel
 \end{itemize}
 \end{frame}
 
@@ -132,6 +133,16 @@ Stub for one image of branching structure here - univariate case will do
 \end{frame}
 
 \begin{frame}
+\frametitle{Deterministic Intensity Functions}
+Intensity function $\lambda_0(t)>0$, describes external event triggering
+\begin{itemize}
+	\item Independence: previous events within the process
+	\item Base (or background) intensity
+	\item \textit{exogenous} / \textit{immigrant} events
+\end{itemize}
+\end{frame}
+
+\begin{frame}
 \frametitle{Cluster of offspring}
 \begin{itemize}
 	\item The offsprings of one immigrant events, which are the immediate offsprings of it, and their immediate offsprings, and their immediate offsprings, \dots, can be grouped as one cluster.
@@ -143,6 +154,21 @@ Stub for one image of branching structure here - univariate case will do
 
 \subsection{Memory Kernels}
 
+\begin{frame}
+\frametitle{Branching Structure}
+Events categorised into: \textit{immigrants} and \textit{offspring}
+\begin{itemize}
+	\item \textit{immigrants} arrive independently
+	\item \textit{offspring} triggered by existing events
+	\item \textit{offspring} structured into clusters, associated with specific existing \textit{immigrant} event
+\end{itemize}
+Two quantities:
+\begin{itemize}
+	\item \textit{branching factor} - expected \# events triggered by \textit{immigrants}
+	\item Total \# events in a cluster of \textit{offspring}
+\end{itemize}
+\end{frame}
+  
 \begin{frame}
 \frametitle{Memory Kernels}
 Memory Kernels can be in any form, with two popular forms:
@@ -205,6 +231,7 @@ stub
 \begin{center}
 \begin{normalsize}
 \emph{E0007424@u.nus.edu}
+\emph{E0012680@u.nus.edu}
 \end{normalsize}
 \end{center}
 \end{frame}
