@@ -211,7 +211,6 @@ Efficient sampling for Hawkes process with exponential kernel
 \end{itemize}
 \end{frame}
 
-%------------------------------------------------
 \subsection{Parameter Estimation}
 \begin{frame}
 \frametitle{Likelihood functions for Exponential Kernels}
@@ -357,7 +356,7 @@ L(\Theta) = &\exp(-\int_{0}^{T} \lambda(t \mid F_t) dt) \prod_{i=1}^n \lambda(T_
 As tested on the 10 years Euro-Bond future front contract by Bacry, when $\gamma$ is closed to $0$, the empirical kernel is well described by the power-law kernel.
 \begin{equation*}
 \begin{split}
-\sum_{i=1}^n \frac{1}{\mu + \alpha\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))^{1 + \gamma}}} &= T\\
+\sum_{i=1}^n \frac{1}{\mu + \alpha\sum_{j=0}^i \frac{1}{1 + \beta (T_i - T_j)}} &= T\\
 \sum_{i=1}^n \frac{\sum_{j=0}^i \frac{1}{(1 + \beta (T_i - T_j))}}{\mu + \alpha\sum_{j=0}^i \frac{1}{1 + \beta (T_i - T_j)}} = &\int_{0}^{T} \sum_{i: t>T_i} \frac{1}{1 + \beta (t - T_i)} dt\\
 \sum_{i=1}^n \frac{\alpha\sum_{j=0}^i \frac{T_i - T_j}{(1 + \beta (T_i - T_j))^2}}{\mu + \alpha\sum_{j=0}^i \frac{1}{1 + \beta (T_i - T_j)}} = &\int_{0}^{T} \sum_{i: t>T_i} \frac{t - T_i}{(1 + \beta (t - T_i))^2} dt\\
 \end{split}
@@ -418,6 +417,32 @@ TODO : one image of branching structure here - bivariate case
 	\item $\phi^{1,2}(t) = \phi^{2,1}(t) = \phi^s(t)$ : \textbf{s}elf-effect
 	\item $\phi^{1,1}(t) = \phi^{2,2}(t) = \phi^c(t)$ : \textbf{c}ross-effect
 \end{itemize}
+\end{frame}
+
+\subsection{Parameter Estimation}
+\begin{frame}
+\frametitle{Likelihood functions for Bivariate Exponential Kernels}
+Since price models using two variables following Hawkes Process with exponential kernels, we present its likelihood functions here:
+\begin{equation*}
+\begin{split}
+L(\Theta) = &\prod_{i=1}^2 \left[ \prod_{j=1}^{n_i} f(T_{i,j}) \prod_{j=1}^{n_i} (1-F_{T_{i,j-1}}(T_{i,j})) (1-F_{T_{i,n_i}}(T)) \right]\\
+= &\prod_{i=1}^2 \left[ \prod_{j=1}^{n_i} \lambda_i(T_{i,j}) \left(\prod_{j=1}^{n_i} \exp(-\int_{T_{i,j-1}}^{T_{i,j}} \lambda_i(s) ds)\right) \exp \left(-\int_{T_{i,n}}^{T} \lambda_i(s) ds\right) \right]\\
+= &\prod_{i=1}^2 \left[ \exp \left(-\int_{0}^{T} \lambda_i(s) ds\right) \prod_{j=1}^{n_i} \lambda_i(T_{i,j}) \right]\\
+\end{split}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Likelihood functions for Exponential Kernels}
+Stub:\\
+$\phi(t) = \alpha e^{\delta t}$, $\lambda_0(t) = \mu \to \lambda(t \mid F_{t}) = \mu + \sum_{i: t>T_i} \alpha e^{\delta (t - T_{i})}$
+\begin{equation*}
+\begin{split}
+L(\Theta) = &\exp(-\int_{0}^{T} \lambda(t \mid F_t) dt) \prod_{i=1}^n \lambda(T_i \mid F_{T_{i}})\\
+= &\exp(-\int_{0}^{T}  \mu + \sum_{i: t>T_i} \alpha e^{\delta (t - T_i)} dt) \prod_{i=1}^n (\mu + \sum_{j=0}^i \alpha e^{\delta (T_i - T_j)})\\[5mm]
+\ln L(\Theta) = & \sum_{i=1}^n \ln (\mu + \alpha \sum_{j=0}^i  e^{\delta (T_i - T_j)}) - \mu T - \alpha \int_{0}^{T}  \sum_{i: t>T_i} e^{\delta (t - T_i)} dt 
+\end{split}
+\end{equation*}
 \end{frame}
 
 \begin{frame}
