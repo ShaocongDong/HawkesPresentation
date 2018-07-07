@@ -103,6 +103,7 @@ Arrival time are distributed as exponential random variables.
 \end{itemize}
 \end{frame}
 
+
 \section{Univariate Hawkes Process}
 
 \begin{frame}
@@ -119,7 +120,6 @@ $\lambda(t \mid H_t) = \lambda_0(t) + \sum_{i: t > T_i} \phi(t - T_i)$
 \end{frame}
 
 \subsection{Branching Structure}
-
 \begin{frame}
 \frametitle{Branching Structure}
 \begin{itemize}
@@ -132,16 +132,21 @@ $\lambda(t \mid H_t) = \lambda_0(t) + \sum_{i: t > T_i} \phi(t - T_i)$
 Stub for one image of branching structure here - univariate case will do
 \end{frame}
 
+\subsection{Deterministic Intensity Functions}
 \begin{frame}
 \frametitle{Deterministic Intensity Functions}
 Intensity function $\lambda_0(t)>0$, describes external event triggering
 \begin{itemize}
 	\item Independence: previous events within the process
 	\item Base (or background) intensity
-	\item \textit{exogenous} / \textit{immigrant} events
+	\item In the multivariate/bivariate case, the intensity function can be a constant.
+	\item For example, $\lambda_i,0(t) = \mu_i$ for a formulation of $\lambda_i(t) = \mu_i + \sum_{i: t > T_i} \phi(t - T_i)$
 \end{itemize}
 \end{frame}
 
+
+
+\subsection{Cluster of offspring}
 \begin{frame}
 \frametitle{Cluster of offspring}
 \begin{itemize}
@@ -153,22 +158,6 @@ Intensity function $\lambda_0(t)>0$, describes external event triggering
 \end{frame}
 
 \subsection{Memory Kernels}
-
-\begin{frame}
-\frametitle{Branching Structure}
-Events categorised into: \textit{immigrants} and \textit{offspring}
-\begin{itemize}
-	\item \textit{immigrants} arrive independently
-	\item \textit{offspring} triggered by existing events
-	\item \textit{offspring} structured into clusters, associated with specific existing \textit{immigrant} event
-\end{itemize}
-Two quantities:
-\begin{itemize}
-	\item \textit{branching factor} - expected \# events triggered by \textit{immigrants}
-	\item Total \# events in a cluster of \textit{offspring}
-\end{itemize}
-\end{frame}
-  
 \begin{frame}
 \frametitle{Memory Kernels}
 Memory Kernels can be in any form, with two popular forms:
@@ -179,16 +168,7 @@ Memory Kernels can be in any form, with two popular forms:
 \end{itemize}
 \end{frame}
 
-\subsection{Deterministic Base Intensity Functions}
 
-\begin{frame}
-\frametitle{Deterministic Base Intensity Functions}
-$\lambda_0(t)$ - not done at this page
-\begin{itemize}
-	\item In the multivariate/bivariate case, the intensity function can be a constant.
-	\item For example, $\lambda_i,0(t) = \mu_i$ for a formulation of $\lambda_i(t) = \mu_i + \sum_{i: t > T_i} \phi(t - T_i)$
-\end{itemize}
-\end{frame}
 
 %------------------------------------------------
 \subsection{Simulation}
