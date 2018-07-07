@@ -188,7 +188,7 @@ Applies to all non-homogeneous Poisson processes.
 	\item Sampling procedure:
 	\begin{enumerate}
 		\item $T=T_i$, sample $\tau$ (inverse transform)
-		\item $\lambda^{\star}=\lambda(T)$, update $T=T+\tau$
+		\item $\lambda^{\star}=\lambda(T)$, update $T=T+\tau$ (thinning property)
 		\item $s\sim U(0,1)$, $T_i=T$ if $s<\frac{\lambda(T)}{\lambda^{\star}}$, otherwise repeat process
 		\item Repeat until react to $i=N$
 	\end{enumerate}
@@ -201,9 +201,12 @@ Efficient sampling for Hawkes process with exponential kernel
 \[\lambda(t)=\underbrace{a+(\lambda_0-a)e^{-\delta t}}_{\text{immigrant rate}}+\underbrace{\sum_{T_i<t}\gamma e^{-\delta(t-T_i)}}_{\text{jump by event}}, t>0 \]
 \begin{itemize}
 	\item Markov (process) decomposition when $\Phi$ is exponential
-	\item Part 1: sample $s_0=-\frac{1}{a}\ln u_0$ (inverse transform)
+	\item Split to two independent parts:
+	\begin{itemize}
+		\item Part 1: sample $s_0=-\frac{1}{a}\ln u_0$ (inverse transform)
 	\item Part 2: $s_1=-\frac{1}{\delta}\ln d$, $d=1+\frac{\delta \ln u_1}{\lambda(T^+_{i-1})-a}$ (Markov property)
-	\item Inter Arrival time = $\min\{s_0,s_1\}$
+	\end{itemize}
+	\item Inter Arrival time = $\min\{s_0,s_1\}$ to get the first event occurring time
 \end{itemize}
 \end{frame}
 
