@@ -451,19 +451,42 @@ Since price models using two variables following Hawkes Process with exponential
 L(\Theta) = &\prod_{i=1}^2 \left[ \prod_{j=1}^{n_i} f(T_{i,j}) \prod_{j=1}^{n_i} (1-F_{T_{i,j-1}}(T_{i,j})) (1-F_{T_{i,n_i}}(T)) \right]\\
 = &\prod_{i=1}^2 \left[ \prod_{j=1}^{n_i} \lambda_i(T_{i,j}) \left(\prod_{j=1}^{n_i} \exp(-\int_{T_{i,j-1}}^{T_{i,j}} \lambda_i(s) ds)\right) \exp \left(-\int_{T_{i,n}}^{T} \lambda_i(s) ds\right) \right]\\
 = &\prod_{i=1}^2 \left[ \exp \left(-\int_{0}^{T} \lambda_i(s) ds\right) \prod_{j=1}^{n_i} \lambda_i(T_{i,j}) \right]\\
+\ln L(\Theta) = & \sum_{i=1}^2 \left[ \sum_{j=1}^{n_i} \ln \lambda_i(T_{i,j})  -\int_{0}^{T} \lambda_i(s) ds \right]\\
 \end{split}
 \end{equation*}
 \end{frame}
 
 \begin{frame}
-\frametitle{Likelihood functions for Exponential Kernels}
-Stub:\\
-$\phi(t) = \alpha e^{\delta t}$, $\lambda_0(t) = \mu \to \lambda(t \mid F_{t}) = \mu + \sum_{i: t>T_i} \alpha e^{\delta (t - T_{i})}$
+\frametitle{Likelihood functions for Bivariate Exponential Kernels}
+$\phi^{1,1}(t) = \phi^{2,2}(t) = \phi^s(t)$, $\phi^{1,2}(t) = \phi^{2,1}(t) = \phi^c(t)$, $\lambda_{i,0}(t) = \mu_i $, $\to \lambda_i(t \mid F_{t}) = \mu_i + \sum_{j=1}^2 \sum_{k: t>T_{j,k}} \phi^{i,j}(t)$
 \begin{equation*}
 \begin{split}
-L(\Theta) = &\exp(-\int_{0}^{T} \lambda(t \mid F_t) dt) \prod_{i=1}^n \lambda(T_i \mid F_{T_{i}})\\
-= &\exp(-\int_{0}^{T}  \mu + \sum_{i: t>T_i} \alpha e^{\delta (t - T_i)} dt) \prod_{i=1}^n (\mu + \sum_{j=0}^i \alpha e^{\delta (T_i - T_j)})\\[5mm]
-\ln L(\Theta) = & \sum_{i=1}^n \ln (\mu + \alpha \sum_{j=0}^i  e^{\delta (T_i - T_j)}) - \mu T - \alpha \int_{0}^{T}  \sum_{i: t>T_i} e^{\delta (t - T_i)} dt 
+\ln L(\Theta) = & \sum_{i=1}^2 \left[ \sum_{j=1}^{n_i} \ln \lambda_i(T_{i,j})  -\int_{0}^{T} \lambda_i(s) ds \right]\\
+= & \sum_{j=1}^{n_1} \ln \lambda_1(T_{1,j})  -\int_{0}^{T} \lambda_1(t) dt +\sum_{j=1}^{n_2} \ln \lambda_2(T_{2,j})  -\int_{0}^{T} \lambda_2(t) dt\\
+\end{split}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Likelihood functions for Bivariate Exponential Kernels}
+\begin{equation*}
+\begin{split}
+\ln L(\Theta) = & \sum_{j=1}^{n_1} \ln \left(\mu_1 + \sum_{k=1}^{j-1} \phi^s(T_{1,j} - T_{1,k}) + \sum_{k: T_{1,j}>T_{2,k}} \phi^{c}(T_{1,j} - T_{2,k}) \right) \\
+- &\mu_1 T - \int_{0}^{T} \sum_{k: t>T_{1,k}} \phi^s(t - T_{1,k}) + \sum_{k: t>T_{2,k}} \phi^{c}(t - T_{2,k}) dt \\
++&\sum_{j=1}^{n_2} \ln \left(\mu_2 + \sum_{k=1}^{j-1} \phi^s(T_{2,j} - T_{2,k}) + \sum_{k: T_{2,j}>T_{1,k}} \phi^{c}(T_{2,j} - T_{1,k}) \right) \\
+- & \mu_2 T - \int_{0}^{T} \sum_{k: t>T_{2,k}} \phi^s(t - T_{2,k}) + \sum_{k: t>T_{1,k}} \phi^{c}(t - T_{1,k}) dt\\
+\end{split}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Likelihood functions for Bivariate Exponential Kernels}
+Since it is too computationally costly to expand $\phi^s$ and $\phi^c$, we are going to leave the derivation out in this presentation.
+\begin{equation*}
+\begin{split}
+\frac{\partial}{\partial \mu_1} \ln L(\Theta) = & \sum_{j=1}^{n_1} \left(\mu_1 + \sum_{k=1}^{j-1} \phi^s(T_{1,j} - T_{1,k}) + \sum_{k: T_{1,j}>T_{2,k}} \phi^{c}(T_{1,j} - T_{2,k}) \right)^{-1} \\
+- & T = 0\\
+\to T = &\sum_{j=1}^{n_1} \left(\mu_1 + \sum_{k=1}^{j-1} \phi^s(T_{1,j} - T_{1,k}) + \sum_{k: T_{1,j}>T_{2,k}} \phi^{c}(T_{1,j} - T_{2,k}) \right)^{-1}
 \end{split}
 \end{equation*}
 \end{frame}
