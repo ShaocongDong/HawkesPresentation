@@ -129,7 +129,11 @@ $\lambda(t \mid F_t) = \lambda_0(t) + \sum_{i: t > T_i} \phi(t - T_i)$
 	\item Self-exciting is the property which can be observed in the financial markets as momentum, in which investors following the trend in the prices tend to cause trend in the same direction.
 	\item In econometrics, this property of markets is observed as reverse casuality, as price movements drive demands, and demands drive prices as well.
 \end{itemize}
-TODO : one image of branching structure here - univariate case
+
+\begin{center}
+	\includegraphics[scale=0.5]{image/branching_1}
+\end{center}
+
 \end{frame}
 
 \subsection{Deterministic Intensity Functions}
@@ -167,6 +171,25 @@ Memory Kernels can be in any form, with two popular forms:
 	\item By the self-exciting property, the kernel shoud possess decay property since we expect the intensity to be higher when there are more arrivals in the near past.
 	\item The multiplier $\beta$ to $\alpha$ is left out because a variable $\alpha$ is able to capture the changes by itself.
 \end{itemize}
+\end{frame}
+
+\subsection{Marked Process}
+\begin{frame}
+	\frametitle{Marked Process}
+	Each event has a corresponding mark / magnitude $m_i$ at event time $T_i$
+	\begin{itemize}
+		\item Event lies in domain $S \times M$
+		\item power-law kernel $\phi_m(\tau) = \kappa m^{\beta}(\tau + c)^{-(1+\theta)}$
+		\item Event marks $m_i$ can be i.i.d. samples from a power law distribution $P(m)=(\alpha - 1) m^{-\alpha }$
+		\item Four parameters $\theta = \{\kappa,\beta,c,\theta\}$
+		\begin{enumerate}
+			\item $\kappa$: ``event quality'', scales the subsequent event rate
+			\item $c>0$: temporal shift to keep $\phi_m(\tau)$ bounded
+			\item $\theta$: power-law exponent, describing how fast an event is forgotten
+		\end{enumerate}
+		\item $\kappa m^{\beta}$ accounts for magnitude of influences
+		\item $(\tau + c)^{-(1+\theta)}$ models the memory over time
+	\end{itemize}
 \end{frame}
 
 \subsection{Simulation}
