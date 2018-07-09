@@ -1,0 +1,67 @@
+% This is a comment.
+% the region directly below this comment, up till the command \begin{document} is known as the 'preamble'
+% basic setup
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+% for mathematics
+\usepackage{amsmath}
+\usepackage{amsthm}
+% define theorems, lemmas, etc
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\usepackage{amssymb}
+
+% for adjusting margins
+\usepackage{geometry}
+\geometry{
+	a4paper,
+ 	left=26mm,
+ 	right=20mm,
+ 	top=33mm,
+ 	bottom=38mm
+}
+
+% for introducing urls
+\usepackage{url}
+
+% for colored text
+\usepackage{color}
+
+% for creating lists
+\usepackage{enumerate}
+
+% change font to times new roman
+\usepackage{times}
+
+% include algorithm package
+\usepackage[]{algorithm2e}
+
+% include bbm package to support indicator variable
+\usepackage{bbm}
+
+% include picture
+\usepackage{graphicx}
+
+% include bibliography
+\usepackage[superscript,biblabel]{cite}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% the region between \begin{document} ... \end{document} is known as the 'text'
+\begin{document}
+\begin{center}
+	\vspace*{.09\textheight}
+	\fontsize{14}{14}{\bfseries \textrm{Abstract on Hawkes Process in Finance Presentation 1}}\\[2mm]
+	\fontsize{14}{14}{\textrm{Dong S., Wang Z.}}\\[2mm]
+	\fontsize{12}{12}{\emph{Department of Mathematics National University of Singapore\\Science Drive 2, Singapore 117543}}
+\end{center}
+
+\section*{Abstract}
+Hawkes processes are a particularly interesting class of stochastic process that have been applied in diverse areas, from natural events to financial modelling analysis. Events that are observed in time frequently cluster naturally. For some events, it’s expected that some event arrival can excite the process in the sense that the chance of a subsequent arrival is increased for some time period after the initial arrival. Market microstructures research, including modelling of high frequency financial data, market impact, market risk and optimal execution has been one of the most popular topic. However, only several continuous time models have been used while discrete time models have been used most of the time.\\
+
+Hawkes processes are becoming increasingly popular in the high frequency finance space mainly attributed to their great simplicity and flexibility, the ability to account for interaction of various types of events and influence of some intensive factors, and the existence of nonstationarities, and even the clustering effect originated from its response function. This presentation starts by some preliminary knowledge about counting processes and Poisson processes, followed by an introduction of the forms and properties of univariate hawkes process, as well as the bivariate case. Various formulations of price models are also discussed alongside simulation of data points with thinning or decomposition algorithms and parameter estimation.
+\end{document}
