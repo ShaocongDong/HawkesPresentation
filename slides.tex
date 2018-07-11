@@ -237,6 +237,36 @@ Efficient sampling for Hawkes process with exponential kernel
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+\frametitle{Univariate Exponential Kernel Simulation}
+Expected number of events with $\alpha$ varying from $0.05$ to $1$.\\
+$\beta = 5, T = 10, \mu = 1$
+\begin{figure}[h]
+      \centering
+	\includegraphics[scale=0.45]{image/AlphaSimulation.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Univariate Exponential Kernel Simulation}
+Expected number of events with $\beta$ varying from $0.2$ to $4$.\\
+$\alpha = 0.2, T = 10, \mu = 1$
+\begin{figure}[h]
+      \centering
+	\includegraphics[scale=0.45]{image/BetaSimulation.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Univariate Exponential Kernel Simulation}
+Expected number of events with $\mu$ varying from $0.5$ to $5$.\\
+$\alpha = 0.2, \beta = 5, T = 10$
+\begin{figure}[h]
+      \centering
+	\includegraphics[scale=0.45]{image/MuSimulation.png}
+\end{figure}
+\end{frame}
+
 \subsection{Parameter Estimation}
 \begin{frame}
 \frametitle{Likelihood functions for Exponential Kernels}
@@ -515,6 +545,16 @@ A result of literature review shows that Hawkes Process models can be applied fo
 	\item prices of equity index, bond futures, foreign exchange rates
 	\item peculiar non-stationarities in market microstructures such as intraday seasonalities and overnight gaps
 	\item volatility clustering phenomenon modelling (correlated nature of volatility fluctutations)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Application for market impact modelling}
+Hawkes Process models can also be applied to model the market impact which is:
+\begin{itemize}
+	\item the impact on prices caused by placing order with significant amount
+	\item extra cost induced per transaction which needs to be added to the transaction costs charged by market
+	\item mechanism enforcing efficiency of market, allowing prices to reflectg fundamental information
 \end{itemize}
 \end{frame}
 
