@@ -146,8 +146,6 @@ Base intensity function $\lambda_0(t)>0$, describes externally triggered events 
 \begin{itemize}
 	\item Independence: previous events within the process
 	\item Base (or background) intensity
-	\item In the multivariate/bivariate case, the intensity function can be a constant.
-	\item For example, $\lambda_i,0(t) = \mu_i$ for a formulation of $\lambda_i(t) = \mu_i + \sum_{i: t > T_i} \phi(t - T_i)$
 \end{itemize}
 \end{frame}
 
@@ -225,7 +223,7 @@ Applies to all non-homogeneous Poisson processes.
 \begin{frame}
 \frametitle{Decomposition Algorithm}
 Efficient sampling for Hawkes process with exponential kernel
-\[\lambda(t)=\underbrace{a+(\lambda_0-a)e^{-\delta t}}_{\text{immigrant rate}}+\underbrace{\sum_{T_i<t}\gamma e^{-\delta(t-T_i)}}_{\text{jump by event}}, t>0 \]
+\[\lambda(t)=\underbrace{a+(\lambda_0-a)e^{-\delta t}}_{\text{immigrant rate}}+\underbrace{\sum_{T_i<t}\gamma e^{-\alpha(t-T_i)}}_{\text{jump by event}}, t>0 \]
 \begin{itemize}
 	\item Markov (process) decomposition when $\Phi$ is exponential
 	\item Split to two independent parts:
@@ -441,6 +439,8 @@ $\lambda_2(t \mid F_t) = \lambda_{2,0}(t) + \sum_{i: t > T_{1,i}} \phi^{2,1}(t -
 \begin{frame}
 \frametitle{Bivariate / Multivariate Hawkes Process}
 \begin{itemize}
+	\item In this case, the intensity function is a constant for each variable.
+	\item $\lambda_{i,0}(t) = \mu^i$ for $\lambda_i(t) = \mu^i + \sum_{j=1}^D \int  \phi^{i,j} (t - t') dN_{t'}^j$
 	\item Base intensity function $\lambda_{i,0}(t)>0$ describes externally triggered events (immigrants) of variable $i$
 	\item The memory kernels will appear in matrix of functions, in which the functions are positive and causal
 	\item $\phi^{i,j}(t) = 0 \; \forall t < 0$
@@ -470,8 +470,8 @@ $\lambda_2(t \mid F_t) = \lambda_{2,0}(t) + \sum_{i: t > T_{1,i}} \phi^{2,1}(t -
 \phi^c(t) & \phi^s(t) \end{array} \right).
 \]
 \begin{itemize}
-	\item $\phi^s(t) = \alpha^s \beta^s \exp(-\beta^s t), \forall t > 0$
-	\item $\phi^c(t) = \alpha^c \beta^c \exp(-\beta^c t), \forall t > 0$
+	\item $\phi^s(t) = \alpha^s \exp(-\beta^s t), \forall t > 0$
+	\item $\phi^c(t) = \alpha^c \exp(-\beta^c t), \forall t > 0$
 	\item This is one special case, in which two variables share the same function / parameter which determine the effect of them exciting themselves or exciting the other variable.
 	\item $\phi^{1,2}(t) = \phi^{2,1}(t) = \phi^s(t)$ : \textbf{s}elf-effect
 	\item $\phi^{1,1}(t) = \phi^{2,2}(t) = \phi^c(t)$ : \textbf{c}ross-effect
