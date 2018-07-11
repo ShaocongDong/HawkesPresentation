@@ -563,9 +563,50 @@ A result of literature review shows that Hawkes Process models can be applied fo
 \frametitle{Application for market impact modelling}
 Hawkes Process models can also be applied to model the market impact which is:
 \begin{itemize}
-	\item the impact on prices caused by placing order with significant amount
+	\item the impact on price levels caused by placing order with significant amount
 	\item extra cost induced per transaction which needs to be added to the transaction costs charged by market
 	\item mechanism enforcing efficiency of market, allowing prices to reflectg fundamental information
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Application for market impact modelling}
+Hawkes Impact Model(HIM) proposed by Bacry and Muzy
+\begin{itemize}
+	\item directly accounts for the joint dynamics of mid-prices and market order occurrences
+	\item breaks down into:
+	\begin{itemize}
+		\item self-excitement of market order flow
+		\item self-excitement of price movements
+		\item impact of the market orders on prices (market impact)
+		\item impact of price movements on market order flow intensity (feedback influence)
+	\end{itemize}
+	\item was able to disentangle the self and cross excitation dynamics of price changes from market impacts
+	\item was not able to model for either the volume of the market orders, nor the price movement sizes
+	\item was not able to consider the bid and ask (offer) price movements
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Application for market impact modelling}
+2-dimensional Hawkes Impact Model(HIM)
+\begin{itemize}
+	\item $\lambda_t^1 = \mu + \phi^s dN_t^2 + \phi^I f(r_t)$
+	\item $\lambda_t^2 = \mu + \phi^s dN_t^1 + \phi^x f(r_t)$
+	\begin{itemize}
+		\item $dN_t^1$ : upward price movements
+		\item $dN_t^2$ : downward price movements
+		\item $\phi^s(t)$ : self-excitement of price movements
+		\item $\phi^l(t)$ : market impact - buy on upward / sell on downward
+		\item $\phi^x(t)$ : cross market impact - buy on downward / sell on upward
+		\item $r(t)$ : trading rate per unit time
+		\item $r(t)dt$ : number of shares bought in $dt$ time
+	\end{itemize}
+	\item Impulsive-HIM: $\phi^x(t) = C\frac{\phi^s(t)}{|| \phi^s||}$
+	\begin{itemize}
+		\item $C = 0 \to$ no contrarian impact, strong permanent impact
+		\item $C = 1 \to$ strong contrarian impact, no permanent impact
+	\end{itemize}
 \end{itemize}
 \end{frame}
 
