@@ -539,6 +539,17 @@ Since it is too computationally costly to expand $\phi^s$ and $\phi^c$, we are g
 \end{frame}
 
 \begin{frame}
+\frametitle{Maximum Likelihood Estimates}
+\begin{itemize}
+	\item It has been universally agreed that computation with MLE for Hawkes process is always going to be costly
+	\item Computation of the likelihood is of order $O(M^2D)$ for a general Hawkes process, e.g. power law kernal
+	\item where $M$ is the number of events, and $D$ is the number of Hawkes processes
+	\item Computation of the likelihood is of order $O(MD)$ for a Hawkes process with exponential kernel
+	\item Part of the reason for popularity of bivariate exponential price models
+\end{itemize}
+\end{frame}
+
+\begin{frame}
 \frametitle{Application for market activity}
 A result of literature review shows that Hawkes Process models can be applied for:
 \begin{itemize}
