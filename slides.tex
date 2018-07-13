@@ -291,12 +291,12 @@ L(\Theta) = &\prod_{i=1}^n f(T_{i}) \prod_{i=1}^n (1-F_{T_{i-1}}(T_i)) (1-F_{T_{
 \begin{frame}
 \frametitle{Likelihood functions for Exponential Kernels}
 Suppose we are going to use exponential decay kernel representation and constant base intensity function:\\
-$\phi(t) = \alpha e^{\delta t}$, $\lambda_0(t) = \mu \to \lambda(t \mid F_{t}) = \mu + \sum_{i: t>T_i} \alpha e^{\delta (t - T_{i})}$
+$\phi(t) = \alpha e^{-\delta t}$, $\lambda_0(t) = \mu \to \lambda(t \mid F_{t}) = \mu + \sum_{i: t>T_i} \alpha e^{-\delta (t - T_{i})}$
 \begin{equation*}
 \begin{split}
 L(\Theta) = &\exp(-\int_{0}^{T} \lambda(t \mid F_t) dt) \prod_{i=1}^n \lambda(T_i \mid F_{T_{i}})\\
-= &\exp(-\int_{0}^{T}  \mu + \sum_{i: t>T_i} \alpha e^{\delta (t - T_i)} dt) \prod_{i=1}^n (\mu + \sum_{j=0}^i \alpha e^{\delta (T_i - T_j)})\\[5mm]
-\ln L(\Theta) = & \sum_{i=1}^n \ln (\mu + \alpha \sum_{j=0}^i  e^{\delta (T_i - T_j)}) - \mu T - \alpha \int_{0}^{T}  \sum_{i: t>T_i} e^{\delta (t - T_i)} dt 
+= &\exp(-\int_{0}^{T}  \mu + \sum_{i: t>T_i} \alpha e^{-\delta (t - T_i)} dt) \prod_{i=1}^n (\mu + \sum_{j=1}^{i-1} \alpha e^{-\delta (T_i - T_j)})\\[5mm]
+\ln L(\Theta) = & \sum_{i=1}^n \ln (\mu + \alpha \sum_{j=1}^{i-1}  e^{-\delta (T_i - T_j)}) - \mu T - \alpha \int_{0}^{T}  \sum_{i: t>T_i} e^{-\delta (t - T_i)} dt 
 \end{split}
 \end{equation*}
 \end{frame}
@@ -306,9 +306,9 @@ L(\Theta) = &\exp(-\int_{0}^{T} \lambda(t \mid F_t) dt) \prod_{i=1}^n \lambda(T_
 Differentiate with respect to $\mu$:
 \begin{equation*}
 \begin{split}
-\ln L(\Theta) = & \sum_{i=1}^n \ln (\mu + \alpha \sum_{j=0}^i  e^{\delta (T_i - T_j)}) - \mu T - \alpha \int_{0}^{T}  \sum_{i: t>T_i} e^{\delta (t - T_i)} dt \\
-\frac{\partial}{\partial \mu} \ln L(\Theta) =& \sum_{i=1}^n \frac{1}{\mu + \alpha \sum_{j=0}^i e^{\delta (T_i - T_j)}} - T = 0\\
-\to &\sum_{i=1}^n \frac{1}{\mu + \alpha \sum_{j=0}^i e^{\delta (T_i - T_j)}} = T
+\ln L(\Theta) = & \sum_{i=1}^n \ln (\mu + \alpha \sum_{j=1}^{i-1}  e^{-\delta (T_i - T_j)}) - \mu T - \alpha \int_{0}^{T}  \sum_{i: t>T_i} e^{-\delta (t - T_i)} dt \\
+\frac{\partial}{\partial \mu} \ln L(\Theta) =& \sum_{i=1}^n \frac{1}{\mu + \alpha \sum_{j=1}^{i-1} e^{-\delta (T_i - T_j)}} - T = 0\\
+\to &\sum_{i=1}^n \frac{1}{\mu + \alpha \sum_{j=1}^{i-1} e^{-\delta (T_i - T_j)}} = T
 \end{split}
 \end{equation*}
 \end{frame}
@@ -318,9 +318,9 @@ Differentiate with respect to $\mu$:
 Differentiate with respect to $\alpha$:
 \begin{equation*}
 \begin{split}
-\ln L(\Theta) = & \sum_{i=1}^n \ln (\mu + \alpha \sum_{j=0}^i  e^{\delta (T_i - T_j)}) - \mu T - \alpha \int_{0}^{T}  \sum_{i: t>T_i} e^{\delta (t - T_i)} dt \\
-\frac{\partial}{\partial \alpha} \ln L(\Theta) =& \sum_{i=1}^n \frac{e^{\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=0}^i e^{\delta (T_i - T_j)}} - \int_{0}^{T}  \sum_{i: t>T_i} e^{\delta (t - T_i)} dt= 0\\
-\to& \sum_{i=1}^n \frac{e^{\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=0}^i e^{\delta (T_i - T_j)}} = \int_{0}^{T}  \sum_{i: t>T_i} e^{\delta (t - T_i)} dt
+\ln L(\Theta) = & \sum_{i=1}^n \ln (\mu + \alpha \sum_{j=1}^{i-1}  e^{-\delta (T_i - T_j)}) - \mu T - \alpha \int_{0}^{T}  \sum_{i: t>T_i} e^{-\delta (t - T_i)} dt \\
+\frac{\partial}{\partial \alpha} \ln L(\Theta) =& \sum_{i=1}^n \frac{\sum_{j=1}^{i-1}e^{-\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=1}^{i-1} e^{-\delta (T_i - T_j)}} - \int_{0}^{T}  \sum_{i: t>T_i} e^{-\delta (t - T_i)} dt= 0\\
+\to& \sum_{i=1}^n \frac{\sum_{j=1}^{i-1}e^{-\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=1}^{i-1} e^{-\delta (T_i - T_j)}} = \int_{0}^{T}  \sum_{i: t>T_i} e^{-\delta (t - T_i)} dt
 \end{split}
 \end{equation*}
 \end{frame}
@@ -330,9 +330,9 @@ Differentiate with respect to $\alpha$:
 Differentiate with respect to $\delta$:
 \begin{equation*}
 \begin{split}
-\ln L(\Theta) = & \sum_{i=1}^n \ln (\mu + \alpha \sum_{j=0}^i  e^{\delta (T_i - T_j)}) - \mu T - \alpha \int_{0}^{T}  \sum_{i: t>T_i} e^{\delta (t - T_i)} dt \\
-\frac{\partial}{\partial \delta} \ln L(\Theta) =& \sum_{i=1}^n \frac{(T_i - T_j)e^{\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=0}^i e^{\delta (T_i - T_j)}} - \int_{0}^{T}  \sum_{i: t>T_i} (t - T_i)e^{\delta (t - T_i)} dt= 0\\
-\to& \sum_{i=1}^n \frac{(T_i - T_j)e^{\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=0}^i e^{\delta (T_i - T_j)}} = \int_{0}^{T}  \sum_{i: t>T_i} (t - T_i)e^{\delta (t - T_i)} dt
+\ln &L(\Theta) = \sum_{i=1}^n \ln (\mu + \alpha \sum_{j=1}^{i-1}  e^{-\delta (T_i - T_j)}) - \mu T - \alpha \int_{0}^{T}  \sum_{i: t>T_i} e^{-\delta (t - T_i)} dt \\
+\to \sum_{i=1}^n &\frac{-\alpha\sum_{j=1}^{i-1}(T_i - T_j)e^{-\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=1}^{i-1} e^{-\delta (T_i - T_j)}} - \alpha \int_{0}^{T}  \sum_{i: t>T_i} -(t - T_i)e^{-\delta (t - T_i)} dt = 0\\
+\to& \sum_{i=1}^n \frac{\sum_{j=1}^{i-1}(T_i - T_j)e^{-\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=1}^{i-1} e^{-\delta (T_i - T_j)}} = \int_{0}^{T}  \sum_{i: t>T_i} (t - T_i)e^{-\delta (t - T_i)} dt
 \end{split}
 \end{equation*}
 \end{frame}
@@ -341,17 +341,17 @@ Differentiate with respect to $\delta$:
 \frametitle{Maximum Likelihood Estimates for Exponential Kernels}
 \begin{equation}
 \begin{split}
-&\sum_{i=1}^n \frac{1}{\mu + \alpha \sum_{j=0}^i e^{\delta (T_i - T_j)}} = T
+&\sum_{i=1}^n \frac{1}{\mu + \alpha \sum_{j=0}^i e^{-\delta (T_i - T_j)}} = T
 \end{split}
 \end{equation}
 \begin{equation}
 \begin{split}
-& \sum_{i=1}^n \frac{e^{\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=0}^i e^{\delta (T_i - T_j)}} = \int_{0}^{T}  \sum_{i: t>T_i} e^{\delta (t - T_i)} dt
+& \sum_{i=1}^n \frac{\sum_{j=1}^{i-1}e^{-\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=1}^{i-1} e^{-\delta (T_i - T_j)}} = \int_{0}^{T}  \sum_{i: t>T_i} e^{-\delta (t - T_i)} dt
 \end{split}
 \end{equation}
 \begin{equation}
 \begin{split}
-&\sum_{i=1}^n \frac{(T_i - T_j)e^{\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=0}^i e^{\delta (T_i - T_j)}} = \int_{0}^{T}  \sum_{i: t>T_i} (t - T_i)e^{\delta (t - T_i)} dt
+&\sum_{i=1}^n \frac{\sum_{j=1}^{i-1}(T_i - T_j)e^{-\delta (T_i - T_j)}}{\mu + \alpha \sum_{j=1}^{i-1} e^{-\delta (T_i - T_j)}} = \int_{0}^{T}  \sum_{i: t>T_i} (t - T_i)e^{-\delta (t - T_i)} dt
 \end{split}
 \end{equation}
 \end{frame}
